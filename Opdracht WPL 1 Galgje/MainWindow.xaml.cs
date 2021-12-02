@@ -79,7 +79,7 @@ namespace Opdracht_WPL_1_Galgje
                 else if (txtResultaat.Text.Length > 1)
                 {
                     levens--;
-                    hart.Source = new BitmapImage(new Uri(@"img/harten" + picnum + ".jpg", UriKind.RelativeOrAbsolute));
+                    galg.Source = new BitmapImage(new Uri(@"img/galg" + picnum + ".png", UriKind.RelativeOrAbsolute));
                     picnum++;
                     lblResultaat.Content = $"{levens} Levens \nJuiste Letters: {juisteletters}\nFoute Letters: {fouteletters}";
                     txtResultaat.Clear();
@@ -89,7 +89,7 @@ namespace Opdracht_WPL_1_Galgje
             }
             if (levens == 0)
             {
-                hart.Source = new BitmapImage(new Uri(@"img/leeg.jpg", UriKind.RelativeOrAbsolute));
+                galg.Source = new BitmapImage(new Uri(@"img/galg9.png", UriKind.RelativeOrAbsolute));
                 lblResultaat.Content = "Je hebt het geheime woord niet\nop tijd geraden !\nJe bent opgehangen !!\nSpeler 2 is de winnaar";
             }          
 
@@ -115,7 +115,7 @@ namespace Opdracht_WPL_1_Galgje
             else
             {
                 levens--;
-                hart.Source = new BitmapImage(new Uri(@"img/harten" + picnum + ".jpg", UriKind.RelativeOrAbsolute));
+                galg.Source = new BitmapImage(new Uri(@"img/galg" + picnum + ".png", UriKind.RelativeOrAbsolute));
                 picnum++;
                 fouteletters += letter;
                 lblResultaat.Content = $"{levens} Levens \nJuiste Letters: {juisteletters}\nFoute Letters: {fouteletters}";
@@ -144,15 +144,16 @@ namespace Opdracht_WPL_1_Galgje
             btnRaad.IsEnabled = false;
             btnVerbergwoord.Visibility = Visibility.Visible;
             levens = 10;
+            picnum = 0;
             geheimwoord = "";
             fouteletters = "";
             juisteletters = "";
-            hart.Source = new BitmapImage(new Uri(@"img/defaulthart.jpg", UriKind.RelativeOrAbsolute));
+            galg.Source = default;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            hart.Source = new BitmapImage(new Uri(@"img/defaulthart.jpg", UriKind.RelativeOrAbsolute));
+            
             DispatcherTimer wekker = new DispatcherTimer();
             wekker.Tick += new EventHandler(DispatcherTimer_Tick);
             wekker.Interval = new TimeSpan(0, 0, 1);

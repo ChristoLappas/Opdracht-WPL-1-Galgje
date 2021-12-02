@@ -113,5 +113,19 @@
   <ItemGroup>
     <Resource Include="gallows.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\galg0.png" />
+    <Resource Include="img\galg1.png" />
+    <Resource Include="img\galg2.png" />
+    <Resource Include="img\galg3.png" />
+    <Resource Include="img\galg4.png" />
+    <Resource Include="img\galg5.png" />
+    <Resource Include="img\galg6.png" />
+    <Resource Include="img\galg7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\galg8.png" />
+    <Resource Include="img\galg9.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

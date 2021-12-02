@@ -25,7 +25,7 @@
         <Button x:Name="btnRaad" IsEnabled="False" Grid.Column="1" Grid.Row="1" Margin="10" Content="_Raad" FontSize="36" Click="btnRaad_Click" Foreground="Black" FontFamily="Old English Text MT"></Button>
         <Button x:Name="btnNieuwspel" Grid.Column="1" Grid.Row="2" Margin="10" Content="_Nieuw Spel" FontSize="36" Click="btnNieuwspel_Click" FontFamily="Old English Text MT" Foreground="Black"></Button>
         <Button x:Name="btnVerbergwoord" Grid.Column="1" Grid.Row="3" Margin="10" Content="_Verberg Woord" FontSize="36" Click="btnVerbergwoord_Click" Foreground="Black" FontFamily="Old English Text MT"></Button>
-        <Image Name="hart" Grid.Column="1"></Image>
+        <Image Name="galg" Grid.Column="1"></Image>
         <Label Name="lblTijd" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" Foreground="#FFF63A08"></Label>
 
     </Grid>
