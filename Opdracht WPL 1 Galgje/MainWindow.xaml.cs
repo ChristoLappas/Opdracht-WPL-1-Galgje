@@ -18,6 +18,9 @@ namespace Opdracht_WPL_1_Galgje
         string fouteletters = "";
         string juisteletters = "";
         int picnum = 0;
+        string mask;
+        char[] geheimarray;
+        
         
 
 
@@ -30,6 +33,8 @@ namespace Opdracht_WPL_1_Galgje
 
         private void btnVerbergwoord_Click(object sender, RoutedEventArgs e)
         {
+
+            
             if (txtResultaat.Text == string.Empty)
             {
                 MessageBox.Show("Geef een geheim woord in !", "Geen woord ingevoerd", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -39,8 +44,9 @@ namespace Opdracht_WPL_1_Galgje
                 btnRaad.IsEnabled = true;
                 btnVerbergwoord.Visibility = Visibility.Hidden;
                 geheimwoord = txtResultaat.Text;
+                mask = new string('*', geheimwoord.Length);                
                 txtResultaat.Focus();                
-                lblResultaat.Content = $"{levens} Levens \nJuiste Letters:\nFoute Letters:";
+                lblResultaat.Content = $"{levens} Levens \nJuiste Letters:\nFoute Letters:\n\n{mask}";
                 txtResultaat.Clear();
                 
 
@@ -60,6 +66,7 @@ namespace Opdracht_WPL_1_Galgje
                     }
                     else
                     {
+                        maskeren(txtResultaat.Text, mask);
                         RaadLetter(geheimwoord, txtResultaat.Text);
                         Vergelijk(geheimwoord, juisteletters);
                         txtResultaat.Clear();
@@ -81,7 +88,7 @@ namespace Opdracht_WPL_1_Galgje
                     levens--;
                     galg.Source = new BitmapImage(new Uri(@"img/galg" + picnum + ".png", UriKind.RelativeOrAbsolute));
                     picnum++;
-                    lblResultaat.Content = $"{levens} Levens \nJuiste Letters: {juisteletters}\nFoute Letters: {fouteletters}";
+                    lblResultaat.Content = $"{levens} Levens \nJuiste Letters: {juisteletters}\nFoute Letters: {fouteletters}\n{mask}";
                     txtResultaat.Clear();
                     txtResultaat.Focus();
                 }
@@ -109,7 +116,7 @@ namespace Opdracht_WPL_1_Galgje
             {
 
                 juisteletters += letter;               
-                lblResultaat.Content = $"{levens} Levens \nJuiste Letters: {juisteletters}\nFoute Letters: {fouteletters}";
+                lblResultaat.Content = $"{levens} Levens \nJuiste Letters: {juisteletters}\nFoute Letters: {fouteletters}\n{mask}";
 
             }
             else
@@ -118,7 +125,7 @@ namespace Opdracht_WPL_1_Galgje
                 galg.Source = new BitmapImage(new Uri(@"img/galg" + picnum + ".png", UriKind.RelativeOrAbsolute));
                 picnum++;
                 fouteletters += letter;
-                lblResultaat.Content = $"{levens} Levens \nJuiste Letters: {juisteletters}\nFoute Letters: {fouteletters}";
+                lblResultaat.Content = $"{levens} Levens \nJuiste Letters: {juisteletters}\nFoute Letters: {fouteletters}\n{mask}";
 
             }
 
@@ -134,6 +141,27 @@ namespace Opdracht_WPL_1_Galgje
                 }
             }
             
+
+        }
+
+        private void maskeren(string s, string m)
+        {
+
+            int lengte = geheimwoord.Length;
+            char c;
+            char letter = Convert.ToChar(s);
+            geheimarray = m.ToCharArray();
+            for (int i = 0; i < lengte; i++)
+            {
+                c = geheimwoord[i];
+                if (c.Equals(letter))
+                {
+                    geheimarray[i] = letter;
+                }
+                
+            }
+            m = new string(geheimarray);
+            mask = m;
 
         }
 
