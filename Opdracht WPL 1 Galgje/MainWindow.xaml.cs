@@ -21,8 +21,10 @@ namespace Opdracht_WPL_1_Galgje
         int picnum = 0;
         string mask;
         char[] geheimarray;
-        
-        
+        int teller = 10;
+        DispatcherTimer timer = new DispatcherTimer();
+
+
 
 
 
@@ -40,6 +42,13 @@ namespace Opdracht_WPL_1_Galgje
             }
             else
             {
+                DispatcherTimer timer = new DispatcherTimer();
+                timer.Tick += new EventHandler(DispatcherTimer_Tick);
+                timer.Interval = new TimeSpan(0, 0, 1);
+                timer.Start();
+                lblTijd.Content = teller;
+                
+
                 lblRaad.IsEnabled = true;
                 lblRaad.Opacity = 1;
                 lblVerbergwoord.Visibility = Visibility.Hidden;
@@ -59,6 +68,7 @@ namespace Opdracht_WPL_1_Galgje
             {
                 if (txtResultaat.Text.Length == 1)
                 {
+                    teller = 10;
                     if (juisteletters.Contains(txtResultaat.Text) || fouteletters.Contains(txtResultaat.Text))
                     {
                         MessageBox.Show("U heeft deze letter al ingegeven", "Dubbel", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -84,6 +94,7 @@ namespace Opdracht_WPL_1_Galgje
                 }
                 else if (txtResultaat.Text.Length > 1)
                 {
+                    teller = 10;
                     levens--;
                     galg.Source = new BitmapImage(new Uri(@"img/galg" + picnum + ".png", UriKind.RelativeOrAbsolute));
                     picnum++;
@@ -174,22 +185,19 @@ namespace Opdracht_WPL_1_Galgje
         }
 
         
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            
-            DispatcherTimer wekker = new DispatcherTimer();
-            wekker.Tick += new EventHandler(DispatcherTimer_Tick);
-            wekker.Interval = new TimeSpan(0, 0, 1);
-            wekker.Start();
-
-            DateTime tijd = DateTime.Now;
-            lblTijd.Content = $"{tijd.ToLongDateString()} {tijd.ToLongTimeString()}";
-
-        }
         private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
-            lblTijd.Content = $"{DateTime.Now.ToLongDateString()} {DateTime.Now.ToLongTimeString()}";
+            if (teller == 0)
+            {
+                timer.Stop();
+            }
+            else
+            {
+                teller--;
+                lblTijd.Content = teller;
+            }
+            
+            
         }
 
         private void lblRaad_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
