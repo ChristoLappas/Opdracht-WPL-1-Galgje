@@ -22,33 +22,44 @@ namespace Opdracht_WPL_1_Galgje
         string mask;
         char[] geheimarray;
         int teller = 10;
+        int teller2 = 1;
         DispatcherTimer timer = new DispatcherTimer();
-
+        DispatcherTimer timer2 = new DispatcherTimer();
+        ImageBrush gallow = new ImageBrush();
+        
 
 
 
 
         public MainWindow()
         {
-            InitializeComponent();
+            InitializeComponent();            
+            timer.Tick += new EventHandler(DispatcherTimer_Tick);
+            timer.Interval = new TimeSpan(0, 0, 1);
+
+            timer2.Tick += new EventHandler(DispatcherTimer2_Tick);
+            timer2.Interval = new TimeSpan(0, 0, 1);
+
+
+
+
+
+
+
 
         }
 
         private void lblVerbergwoord_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
+            
             if (txtResultaat.Text == string.Empty)
             {
                 MessageBox.Show("Geef een geheim woord in !", "Geen woord ingevoerd", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else
             {
-                DispatcherTimer timer = new DispatcherTimer();
-                timer.Tick += new EventHandler(DispatcherTimer_Tick);
-                timer.Interval = new TimeSpan(0, 0, 1);
-                timer.Start();
-                lblTijd.Content = teller;
+                timer.Start();              
                 
-
                 lblRaad.IsEnabled = true;
                 lblRaad.Opacity = 1;
                 lblVerbergwoord.Visibility = Visibility.Hidden;
@@ -56,19 +67,24 @@ namespace Opdracht_WPL_1_Galgje
                 mask = new string('*', geheimwoord.Length);
                 txtResultaat.Focus();
                 lblResultaat.Content = $"{levens} Levens \nJuiste Letters:\nFoute Letters:\n\n{mask}";
-                txtResultaat.Clear();
+                txtResultaat.Clear();               
 
 
             }
+            
         }
+
 
         private void lblRaad_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
+            teller = 10;
             if (levens > 0)
             {
                 if (txtResultaat.Text.Length == 1)
                 {
-                    teller = 10;
+                    
+                    
+                    
                     if (juisteletters.Contains(txtResultaat.Text) || fouteletters.Contains(txtResultaat.Text))
                     {
                         MessageBox.Show("U heeft deze letter al ingegeven", "Dubbel", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -88,13 +104,15 @@ namespace Opdracht_WPL_1_Galgje
                 }
                 else if (txtResultaat.Text == geheimwoord)
                 {
+                    timer.Stop();
+                    lblTijd.Content = "";
                     lblResultaat.Content = $"Hoera !!\nJe hebt\n'{geheimwoord}'\ncorrect geraden !!\nSpeler 1\nheeft gewonnen";
                     txtResultaat.Clear();
                     txtResultaat.Focus();
                 }
                 else if (txtResultaat.Text.Length > 1)
                 {
-                    teller = 10;
+                    
                     levens--;
                     galg.Source = new BitmapImage(new Uri(@"img/galg" + picnum + ".png", UriKind.RelativeOrAbsolute));
                     picnum++;
@@ -106,6 +124,8 @@ namespace Opdracht_WPL_1_Galgje
             }
             if (levens == 0)
             {
+                timer.Stop();
+                lblTijd.Content = "";
                 galg.Source = new BitmapImage(new Uri(@"img/galg9.png", UriKind.RelativeOrAbsolute));
                 lblResultaat.Content = "Je hebt het geheime woord niet\nop tijd geraden !\nJe bent opgehangen !!\nSpeler 2 is de winnaar";
             }
@@ -118,11 +138,13 @@ namespace Opdracht_WPL_1_Galgje
             lblRaad.Opacity = .7;
             lblVerbergwoord.Visibility = Visibility.Visible;
             levens = 10;
+            teller = 10;
             picnum = 0;
             geheimwoord = "";
             fouteletters = "";
             juisteletters = "";
             galg.Source = default;
+            
         }
 
             
@@ -156,6 +178,8 @@ namespace Opdracht_WPL_1_Galgje
             {
                 if (a != "" && a.All(e => b.Contains(e)) && b.All(e => a.Contains(e)))
                 {
+                    timer.Stop();
+                    lblTijd.Content = "";
                     lblResultaat.Content = $"Hoera !!\nJe hebt\n'{geheimwoord}'\ncorrect geraden !!\nSpeler 1\nheeft gewonnen";
                 }
             }
@@ -182,23 +206,42 @@ namespace Opdracht_WPL_1_Galgje
             m = new string(geheimarray);
             mask = m;
 
-        }
+        }       
 
         
         private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
-            if (teller == 0)
+                        
+            lblTijd.Content = teller;
+            teller--;
+            if (teller < 0)
             {
                 timer.Stop();
-            }
-            else
-            {
-                teller--;
-                lblTijd.Content = teller;
-            }
-            
+                grid.Visibility = Visibility.Visible;              
+                levens--;
+                lblResultaat.Content = $"{levens} Levens \nJuiste Letters:\nFoute Letters:\n\n{mask}";
+                galg.Source = new BitmapImage(new Uri(@"img/galg" + picnum + ".png", UriKind.RelativeOrAbsolute));
+                picnum++;
+                teller = 10;
+                timer2.Start();                      
+            }         
             
         }
+
+        private void DispatcherTimer2_Tick(object sender, EventArgs e)
+        {
+            teller2--;
+            if (teller2 == 0)
+            {
+                timer2.Stop();
+                teller2 = 1;
+                grid.Visibility = Visibility.Hidden;
+                timer.Start();
+
+            }
+        }
+
+
 
         private void lblRaad_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
