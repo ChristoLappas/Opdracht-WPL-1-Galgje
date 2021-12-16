@@ -23,7 +23,9 @@
             <ColumnDefinition Width="2*"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Label Grid.RowSpan="3" Name="lblResultaat" FontSize="36" Content="Geef een geheim woord in" Foreground="#FFF63A08" FontFamily="Old English Text MT"></Label>
+        <Viewbox Grid.RowSpan="3">
+                <Label Grid.RowSpan="3" Name="lblResultaat" FontSize="36" Content="Geef een geheim woord in" Foreground="#FFF63A08" FontFamily="Old English Text MT"></Label>
+        </Viewbox>                
         <TextBox Name="txtResultaat" Grid.Row="3" Margin="10" FontSize="36"></TextBox>
         <Label Name="lblRaad" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="Gray" BorderThickness="5px" Background="LightGray" Grid.Column="1" Grid.Row="1" IsEnabled="False" Margin="10" MouseDown="lblRaad_MouseDown" FontFamily="Old English Text MT" FontSize="36" Content="Raad" Foreground="Black" Opacity="0.7" MouseEnter="lblRaad_MouseEnter" MouseLeave="lblRaad_MouseLeave"/>
         <Label Name="lblNieuwspel" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="Gray" BorderThickness="5px" Background="LightGray" Grid.Column="1" Grid.Row="2" Margin="10" MouseDown="lblNieuwspel_MouseDown" FontFamily="Old English Text MT" FontSize="36" Content="Nieuw Spel" MouseEnter="lblNieuwspel_MouseEnter" MouseLeave="lblNieuwspel_MouseLeave"></Label>
@@ -39,5 +41,7 @@
         </Grid>
     </Grid>
     
+
+
 
 </Window>

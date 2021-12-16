@@ -24,9 +24,7 @@ namespace Opdracht_WPL_1_Galgje
         int teller = 10;
         int teller2 = 1;
         DispatcherTimer timer = new DispatcherTimer();
-        DispatcherTimer timer2 = new DispatcherTimer();
-        ImageBrush gallow = new ImageBrush();
-        
+        DispatcherTimer timer2 = new DispatcherTimer();            
 
 
 
@@ -106,7 +104,7 @@ namespace Opdracht_WPL_1_Galgje
                 {
                     timer.Stop();
                     lblTijd.Content = "";
-                    lblResultaat.Content = $"Hoera !!\nJe hebt\n'{geheimwoord}'\ncorrect geraden !!\nSpeler 1\nheeft gewonnen";
+                    lblResultaat.Content = $"Hoera !! Je hebt '{geheimwoord}'\ncorrect geraden !!\nSpeler 1 heeft gewonnen";
                     txtResultaat.Clear();
                     txtResultaat.Focus();
                 }
@@ -116,7 +114,7 @@ namespace Opdracht_WPL_1_Galgje
                     levens--;
                     galg.Source = new BitmapImage(new Uri(@"img/galg" + picnum + ".png", UriKind.RelativeOrAbsolute));
                     picnum++;
-                    lblResultaat.Content = $"{levens} Levens \nJuiste Letters: {juisteletters}\nFoute Letters: {fouteletters}\n{mask}";
+                    lblResultaat.Content = $"{levens} Levens \nJuiste Letters: {juisteletters}\nFoute Letters: {fouteletters}\n\n{mask}";
                     txtResultaat.Clear();
                     txtResultaat.Focus();
                 }
@@ -157,7 +155,7 @@ namespace Opdracht_WPL_1_Galgje
             {
 
                 juisteletters += letter;               
-                lblResultaat.Content = $"{levens} Levens \nJuiste Letters: {juisteletters}\nFoute Letters: {fouteletters}\n{mask}";
+                lblResultaat.Content = $"{levens} Levens \nJuiste Letters: {juisteletters}\nFoute Letters: {fouteletters}\n\n{mask}";
 
             }
             else
@@ -166,7 +164,7 @@ namespace Opdracht_WPL_1_Galgje
                 galg.Source = new BitmapImage(new Uri(@"img/galg" + picnum + ".png", UriKind.RelativeOrAbsolute));
                 picnum++;
                 fouteletters += letter;
-                lblResultaat.Content = $"{levens} Levens \nJuiste Letters: {juisteletters}\nFoute Letters: {fouteletters}\n{mask}";
+                lblResultaat.Content = $"{levens} Levens \nJuiste Letters: {juisteletters}\nFoute Letters: {fouteletters}\n\n{mask}";
 
             }
 
