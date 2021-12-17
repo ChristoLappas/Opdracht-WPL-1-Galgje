@@ -6,6 +6,8 @@ using System.Collections;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using System.Windows.Media;
+using Microsoft.VisualBasic;
+using System.Text;
 
 namespace Opdracht_WPL_1_Galgje
 {
@@ -24,7 +26,12 @@ namespace Opdracht_WPL_1_Galgje
         int teller = 10;
         int teller2 = 1;
         DispatcherTimer timer = new DispatcherTimer();
-        DispatcherTimer timer2 = new DispatcherTimer();            
+        DispatcherTimer timer2 = new DispatcherTimer();
+        DispatcherTimer timer3 = new DispatcherTimer();
+        StringBuilder historiek = new StringBuilder();
+        string speler;
+        
+        
 
 
 
@@ -38,11 +45,13 @@ namespace Opdracht_WPL_1_Galgje
             timer2.Tick += new EventHandler(DispatcherTimer2_Tick);
             timer2.Interval = new TimeSpan(0, 0, 1);
 
+            timer3.Tick += new EventHandler(DispatcherTimer3_Tick);
+            timer3.Interval = new TimeSpan(0, 0, 1);
+            timer3.Start();
+            DateTime tijd = DateTime.Now;
+            lblTijd2.Content = $"{tijd.ToLongTimeString()}";        
 
-
-
-
-
+            
 
 
         }
@@ -55,9 +64,8 @@ namespace Opdracht_WPL_1_Galgje
                 MessageBox.Show("Geef een geheim woord in !", "Geen woord ingevoerd", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else
-            {
-                timer.Start();              
-                
+            {                
+                timer.Start();                
                 lblRaad.IsEnabled = true;
                 lblRaad.Opacity = 1;
                 lblVerbergwoord.Visibility = Visibility.Hidden;
@@ -107,6 +115,8 @@ namespace Opdracht_WPL_1_Galgje
                     lblResultaat.Content = $"Hoera !! Je hebt '{geheimwoord}'\ncorrect geraden !!\nSpeler 1 heeft gewonnen";
                     txtResultaat.Clear();
                     txtResultaat.Focus();
+                    historiek.Append($"{speler} - {levens} levens ({DateTime.Now.ToString("hh:mm:ss")})\n");
+                    MessageBox.Show(historiek.ToString(),"Highscores");
                 }
                 else if (txtResultaat.Text.Length > 1)
                 {
@@ -142,7 +152,8 @@ namespace Opdracht_WPL_1_Galgje
             fouteletters = "";
             juisteletters = "";
             galg.Source = default;
-            
+            speler = Interaction.InputBox("Geef de naam van speler 1", "Naam");
+
         }
 
             
@@ -179,6 +190,8 @@ namespace Opdracht_WPL_1_Galgje
                     timer.Stop();
                     lblTijd.Content = "";
                     lblResultaat.Content = $"Hoera !!\nJe hebt\n'{geheimwoord}'\ncorrect geraden !!\nSpeler 1\nheeft gewonnen";
+                    historiek.Append($"{speler} - {levens} levens ({DateTime.Now.ToString("hh:mm:ss")})\n");
+                    MessageBox.Show(historiek.ToString(),"Highscores");
                 }
             }
             
@@ -238,6 +251,10 @@ namespace Opdracht_WPL_1_Galgje
 
             }
         }
+        private void DispatcherTimer3_Tick(object sender, EventArgs e)
+        {
+            lblTijd2.Content = $"{DateTime.Now.ToLongTimeString()}";
+        }
 
 
 
@@ -269,6 +286,11 @@ namespace Opdracht_WPL_1_Galgje
         private void lblVerbergwoord_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
             lblVerbergwoord.BorderBrush = new SolidColorBrush(Colors.Gray);
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            speler = Interaction.InputBox("Geef de naam van speler 1", "Naam");
         }
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Opdracht_WPL_1_Galgje"
         mc:Ignorable="d"
-        Title="Galgje" Height="450" Width="800">
+        Title="Galgje" Height="450" Width="800" Loaded="Window_Loaded">
     
     <Grid>
         <Grid.Background>
@@ -32,7 +32,8 @@
         <Label Name="lblVerbergwoord" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="Gray" BorderThickness="5px" Background="LightGray" Margin="10" Grid.Row="3" Grid.Column="1" MouseDown="lblVerbergwoord_MouseDown" FontFamily="Old English Text MT" FontSize="36" Content="Verberg Woord" MouseEnter="lblVerbergwoord_MouseEnter" MouseLeave="lblVerbergwoord_MouseLeave"></Label>
         <Image Name="galg" Grid.Column="1"></Image>
         <Label Name="lblTijd" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" Foreground="#FFF63A08" FontFamily="Old English Text MT" FontSize="30"></Label>
-        
+        <Label Name="lblTijd2" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Foreground="#FFF63A08" FontFamily="Old English Text MT" FontSize="30"></Label>
+
         </Grid>
         <Grid Name="grid" Visibility="Hidden">
             <Grid.Background>
