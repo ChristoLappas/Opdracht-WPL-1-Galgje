@@ -24,6 +24,7 @@ namespace Opdracht_WPL_1_Galgje
         int picnum = 0;
         string mask;
         char[] geheimarray;
+        char[] woordarray;
         int teller = 10;
         int teller2 = 1;
         DispatcherTimer timer = new DispatcherTimer();
@@ -33,6 +34,10 @@ namespace Opdracht_WPL_1_Galgje
         string speler;
         Random rnd = new Random();
         int indexWoord;
+        bool hint = false;
+        int rndletter;
+        char hintje;
+        char[] alfabet = { 'a', 'z', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'q', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'w', 'x', 'c', 'v', 'b', 'n' };
         private string[] galgjeWoorden = new string[]
         {
             "grafeem",
@@ -181,6 +186,7 @@ namespace Opdracht_WPL_1_Galgje
                 txtResultaat.Focus();
                 lblResultaat.Content = $"{levens} Levens \nJuiste Letters:\nFoute Letters:\n\n{mask}";
                 txtResultaat.Clear();
+                woordarray = geheimwoord.ToCharArray();
 
 
             }
@@ -217,13 +223,26 @@ namespace Opdracht_WPL_1_Galgje
                 }
                 else if (txtResultaat.Text == geheimwoord)
                 {
-                    timer.Stop();
-                    lblTijd.Content = "";
-                    lblResultaat.Content = $"Hoera !! Je hebt '{geheimwoord}'\ncorrect geraden !!\nSpeler 1 heeft gewonnen";
-                    txtResultaat.Clear();
-                    txtResultaat.Focus();
-                    historiek.Append($"{speler} - {levens} levens ({DateTime.Now.ToString("hh:mm:ss")})\n");
-                    MessageBox.Show(historiek.ToString(), "Highscores");
+                    if (hint == true)
+                    {
+                        timer.Stop();
+                        lblTijd.Content = "";
+                        lblResultaat.Content = $"Hoera !! Je hebt '{geheimwoord}'\ncorrect geraden !!\nSpeler 1 heeft gewonnen";
+                        txtResultaat.Clear();
+                        txtResultaat.Focus();
+                        MessageBox.Show(historiek.ToString(), "Highscores");
+                    }
+                    else
+                    {
+                        timer.Stop();
+                        lblTijd.Content = "";
+                        lblResultaat.Content = $"Hoera !! Je hebt '{geheimwoord}'\ncorrect geraden !!\nSpeler 1 heeft gewonnen";
+                        txtResultaat.Clear();
+                        txtResultaat.Focus();
+                        historiek.Append($"{speler} - {levens} levens ({DateTime.Now.ToString("hh:mm:ss")})\n");
+                        MessageBox.Show(historiek.ToString(), "Highscores");
+                    }
+                    
                 }
                 else if (txtResultaat.Text.Length > 1)
                 {
@@ -243,23 +262,51 @@ namespace Opdracht_WPL_1_Galgje
                 lblTijd.Content = "";
                 galg.Source = new BitmapImage(new Uri(@"img/galg9.png", UriKind.RelativeOrAbsolute));
                 lblResultaat.Content = $"Je hebt '{geheimwoord}' niet\nop tijd geraden !\nJe bent opgehangen !!\nSpeler 2 is de winnaar";
+                MessageBox.Show(historiek.ToString(), "Highscores");
             }
         }
         private void lblNieuwspel_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            txtResultaat.Clear();
-            lblResultaat.Content = "Geef een geheim woord in";
-            lblRaad.IsEnabled = false;
-            lblRaad.Opacity = .7;
-            lblVerbergwoord.Visibility = Visibility.Visible;
-            levens = 10;
-            teller = 10;
-            picnum = 0;
-            geheimwoord = "";
-            fouteletters = "";
-            juisteletters = "";
-            galg.Source = default;
-            speler = Interaction.InputBox("Geef de naam van speler 1", "Naam");
+            var single = MessageBox.Show("Singleplayer of niet ?", "Singleplayer/Multiplayer", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (single == MessageBoxResult.Yes)
+            {
+                speler = Interaction.InputBox("Geef de naam van speler 1", "Naam");
+                indexWoord = rnd.Next(0, galgjeWoorden.Length);
+                geheimwoord = galgjeWoorden[indexWoord];
+                timer.Start();
+                lblRaad.IsEnabled = true;
+                lblRaad.Opacity = 1;
+                lblVerbergwoord.Visibility = Visibility.Hidden;
+                mask = new string('*', geheimwoord.Length);
+                txtResultaat.Focus();
+                hint = false;
+                levens = 10;
+                teller = 10;
+                picnum = 0;
+                fouteletters = "";
+                juisteletters = "";
+                galg.Source = default;
+                lblResultaat.Content = $"{levens} Levens \nJuiste Letters:\nFoute Letters:\n\n{mask}";
+
+            }
+            else
+            {                
+                txtResultaat.Clear();
+                lblResultaat.Content = "Geef een geheim woord in";
+                lblRaad.IsEnabled = false;
+                lblRaad.Opacity = .7;
+                lblVerbergwoord.Visibility = Visibility.Visible;
+                levens = 10;
+                teller = 10;
+                picnum = 0;
+                geheimwoord = "";
+                fouteletters = "";
+                juisteletters = "";
+                hint = false;
+                galg.Source = default;
+                speler = Interaction.InputBox("Geef de naam van speler 1", "Naam");
+            }
+            
 
         }
 
@@ -294,11 +341,22 @@ namespace Opdracht_WPL_1_Galgje
             {
                 if (a != "" && a.All(e => b.Contains(e)) && b.All(e => a.Contains(e)))
                 {
-                    timer.Stop();
-                    lblTijd.Content = "";
-                    lblResultaat.Content = $"Hoera !!\nJe hebt\n'{geheimwoord}'\ncorrect geraden !!\nSpeler 1\nheeft gewonnen";
-                    historiek.Append($"{speler} - {levens} levens ({DateTime.Now.ToString("hh:mm:ss")})\n");
-                    MessageBox.Show(historiek.ToString(), "Highscores");
+                    if (hint == true)
+                    {
+                        timer.Stop();
+                        lblTijd.Content = "";
+                        lblResultaat.Content = $"Hoera !!\nJe hebt\n'{geheimwoord}'\ncorrect geraden !!\nSpeler 1\nheeft gewonnen";
+                        MessageBox.Show(historiek.ToString(), "Highscores");
+                    }
+                    else
+                    {
+                        timer.Stop();
+                        lblTijd.Content = "";
+                        lblResultaat.Content = $"Hoera !!\nJe hebt\n'{geheimwoord}'\ncorrect geraden !!\nSpeler 1\nheeft gewonnen";
+                        historiek.Append($"{speler} - {levens} levens ({DateTime.Now.ToString("hh:mm:ss")})\n");
+                        MessageBox.Show(historiek.ToString(), "Highscores");
+                    }
+                    
                 }
             }
 
@@ -411,6 +469,7 @@ namespace Opdracht_WPL_1_Galgje
                 speler = Interaction.InputBox("Geef de naam van speler 1", "Naam");
                 indexWoord = rnd.Next(0, galgjeWoorden.Length);
                 geheimwoord = galgjeWoorden[indexWoord];
+                woordarray = geheimwoord.ToCharArray();
                 timer.Start();
                 lblRaad.IsEnabled = true;
                 lblRaad.Opacity = 1;
@@ -428,6 +487,37 @@ namespace Opdracht_WPL_1_Galgje
             }
             
             
+        }
+
+        private void lblHint_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            lblHint.BorderBrush = new SolidColorBrush(Colors.Black);
+        }
+
+        private void lblHint_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            lblHint.BorderBrush = new SolidColorBrush(Colors.Gray);
+        }
+
+        private void lblHint_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            hint = true;
+            rndletter = rnd.Next(0, 26);
+            while (true)
+            {
+                if (woordarray.Contains(alfabet[rndletter]))
+                {
+                    rndletter = rnd.Next(0, 26);
+                }
+                else
+                {
+                    hintje = alfabet[rndletter];
+                    break;
+                }
+                
+            }
+            
+            MessageBox.Show($"Letter '{hintje}' zit niet in het geheim woord", "Hint", MessageBoxButton.OK);
         }
     }
 }

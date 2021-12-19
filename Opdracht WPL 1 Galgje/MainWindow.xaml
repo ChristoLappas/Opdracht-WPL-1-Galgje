@@ -18,7 +18,8 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
-        </Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
@@ -26,13 +27,14 @@
         <Viewbox Grid.RowSpan="3">
                 <Label Grid.RowSpan="3" Name="lblResultaat" FontSize="36" Content="Geef een geheim woord in" Foreground="#FFF63A08" FontFamily="Old English Text MT"></Label>
         </Viewbox>                
-        <TextBox Name="txtResultaat" Grid.Row="3" Margin="10" FontSize="36"></TextBox>
+        <TextBox Name="txtResultaat" Grid.Row="4" Margin="10" FontSize="36"></TextBox>
         <Label Name="lblRaad" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="Gray" BorderThickness="5px" Background="LightGray" Grid.Column="1" Grid.Row="1" IsEnabled="False" Margin="10" MouseDown="lblRaad_MouseDown" FontFamily="Old English Text MT" FontSize="36" Content="Raad" Foreground="Black" Opacity="0.7" MouseEnter="lblRaad_MouseEnter" MouseLeave="lblRaad_MouseLeave"/>
-        <Label Name="lblNieuwspel" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="Gray" BorderThickness="5px" Background="LightGray" Grid.Column="1" Grid.Row="2" Margin="10" MouseDown="lblNieuwspel_MouseDown" FontFamily="Old English Text MT" FontSize="36" Content="Nieuw Spel" MouseEnter="lblNieuwspel_MouseEnter" MouseLeave="lblNieuwspel_MouseLeave"></Label>
-        <Label Name="lblVerbergwoord" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="Gray" BorderThickness="5px" Background="LightGray" Margin="10" Grid.Row="3" Grid.Column="1" MouseDown="lblVerbergwoord_MouseDown" FontFamily="Old English Text MT" FontSize="36" Content="Verberg Woord" MouseEnter="lblVerbergwoord_MouseEnter" MouseLeave="lblVerbergwoord_MouseLeave"></Label>
+        <Label Name="lblHint" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="Gray" BorderThickness="5px" Background="LightGray" Grid.Column="1" Grid.Row="2" Margin="10" FontFamily="Old English Text MT" FontSize="36" Content="Hint" Foreground="Black" MouseEnter="lblHint_MouseEnter" MouseLeave="lblHint_MouseLeave" MouseDown="lblHint_MouseDown"/>
+        <Label Name="lblNieuwspel" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="Gray" BorderThickness="5px" Background="LightGray" Grid.Column="1" Grid.Row="3" Margin="10" MouseDown="lblNieuwspel_MouseDown" FontFamily="Old English Text MT" FontSize="36" Content="Nieuw Spel" MouseEnter="lblNieuwspel_MouseEnter" MouseLeave="lblNieuwspel_MouseLeave"></Label>
+        <Label Name="lblVerbergwoord" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="Gray" BorderThickness="5px" Background="LightGray" Margin="10" Grid.Row="4" Grid.Column="1" MouseDown="lblVerbergwoord_MouseDown" FontFamily="Old English Text MT" FontSize="36" Content="Verberg Woord" MouseEnter="lblVerbergwoord_MouseEnter" MouseLeave="lblVerbergwoord_MouseLeave"></Label>
         <Image Name="galg" Grid.Column="1"></Image>
-        <Label Name="lblTijd" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" Foreground="#FFF63A08" FontFamily="Old English Text MT" FontSize="30"></Label>
-        <Label Name="lblTijd2" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Foreground="#FFF63A08" FontFamily="Old English Text MT" FontSize="30"></Label>
+        <Label Name="lblTijd" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Bottom" Foreground="#FFF63A08" FontFamily="Old English Text MT" FontSize="30"></Label>
+        <Label Name="lblTijd2" Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Bottom" Foreground="#FFF63A08" FontFamily="Old English Text MT" FontSize="30"></Label>
 
         </Grid>
         <Grid Name="grid" Visibility="Hidden">
