@@ -189,6 +189,7 @@ namespace Opdracht_WPL_1_Galgje
                 txtResultaat.Clear();
                 woordarray = geheimwoord.ToCharArray();
                 lblTimer.Visibility = Visibility.Hidden;
+                mnuTimerinstellen.IsEnabled = false;
 
 
             }
@@ -259,11 +260,11 @@ namespace Opdracht_WPL_1_Galgje
 
             }
             if (levens == 0)
-            {
+            {                
                 timer.Stop();
                 lblTijd.Content = "";
                 galg.Source = new BitmapImage(new Uri(@"img/galg9.png", UriKind.RelativeOrAbsolute));
-                lblResultaat.Content = $"Je hebt '{geheimwoord}' niet\nop tijd geraden !\nJe bent opgehangen !!\nSpeler 2 is de winnaar";
+                lblResultaat.Content = $"Je hebt '{geheimwoord}' niet\nop tijd geraden !\nJe bent opgehangen !!";
                 MessageBox.Show(historiek.ToString(), "Highscores");
             }
         }
@@ -272,6 +273,7 @@ namespace Opdracht_WPL_1_Galgje
             var single = MessageBox.Show("Singleplayer of niet ?", "Singleplayer/Multiplayer", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (single == MessageBoxResult.Yes)
             {
+                mnuTimerinstellen.IsEnabled = false;
                 var tellerInstellen = MessageBox.Show("Huidige timer staat op 10\nWil je een nieuwe timer instellen ? ", "Timer instellen", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (tellerInstellen == MessageBoxResult.Yes)
                 {
@@ -332,7 +334,7 @@ namespace Opdracht_WPL_1_Galgje
                     fouteletters = "";
                     juisteletters = "";
                     galg.Source = default;
-                    lblTimer.Visibility = Visibility.Visible;
+                    lblTimer.Visibility = Visibility.Hidden;
                     lblResultaat.Content = $"{levens} Levens \nJuiste Letters:\nFoute Letters:\n\n{mask}";
                 }
                 
@@ -359,6 +361,7 @@ namespace Opdracht_WPL_1_Galgje
                 hint = false;
                 galg.Source = default;
                 lblTimer.Visibility = Visibility.Visible;
+                mnuTimerinstellen.IsEnabled = true;
                 timer.Stop();
                 lblTijd.Content = "";                
                 speler = Interaction.InputBox("Geef de naam van speler 1", "Naam");
@@ -463,7 +466,7 @@ namespace Opdracht_WPL_1_Galgje
                 timer.Stop();
                 lblTijd.Content = "";
                 galg.Source = new BitmapImage(new Uri(@"img/galg9.png", UriKind.RelativeOrAbsolute));
-                lblResultaat.Content = $"Je hebt '{geheimwoord}' niet\nop tijd geraden !\nJe bent opgehangen !!\nSpeler 2 is de winnaar";
+                lblResultaat.Content = $"Je hebt '{geheimwoord}' niet\nop tijd geraden !\nJe bent opgehangen !!";
             }
 
 
@@ -523,6 +526,7 @@ namespace Opdracht_WPL_1_Galgje
             var single = MessageBox.Show("Singleplayer of niet ?", "Singleplayer/Multiplayer", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (single == MessageBoxResult.Yes)
             {
+                mnuTimerinstellen.IsEnabled = false;
                 var tellerInstellen = MessageBox.Show("Huidige timer staat op 10\nWil je een nieuwe timer instellen ? ", "Timer instellen", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (tellerInstellen == MessageBoxResult.Yes)
                 {
@@ -581,6 +585,7 @@ namespace Opdracht_WPL_1_Galgje
             {
                 speler = Interaction.InputBox("Geef de naam van speler 1", "Naam");
                 txtResultaat.Focus();
+                mnuTimerinstellen.IsEnabled = true;
             }
             
             
@@ -630,18 +635,177 @@ namespace Opdracht_WPL_1_Galgje
         private void lblTimer_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             isGetal = int.TryParse((Interaction.InputBox("Geef een nieuwe timer in", "Timer instellen")), out T);
-            if (isGetal == true && T >= 5 && T <= 20)
+            while (true)
             {
-                nieuweTeller = T;
-                teller = T;
-                
+                if (isGetal == true && T >= 5 && T <= 20)
+                {
+                    nieuweTeller = T;
+                    teller = T;
+                    break;
+
+                }
+                else
+                {
+                    MessageBox.Show("Nieuwe timer moet een getal zijn tussen 5 en 20", "Foute ingave", MessageBoxButton.OK, MessageBoxImage.Error);
+                    isGetal = int.TryParse((Interaction.InputBox("Geef een nieuwe timer in", "Timer aanpassen")), out T);
+                }
+            }
+            
+
+        }
+
+        private void mnuAfsluiten_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void mnuHighscores_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show(historiek.ToString(), "Highscores");
+        }
+
+        private void mnuHint_Click(object sender, RoutedEventArgs e)
+        {
+            hint = true;
+            rndletter = rnd.Next(0, 26);
+            while (true)
+            {
+                if (woordarray.Contains(alfabet[rndletter]))
+                {
+                    rndletter = rnd.Next(0, 26);
+                }
+                else
+                {
+                    hintje = alfabet[rndletter];
+                    break;
+                }
+
+            }
+            MessageBox.Show($"Letter '{hintje}' zit niet in het geheim woord", "Hint", MessageBoxButton.OK);
+        }
+
+        private void mnuTimerinstellen_Click(object sender, RoutedEventArgs e)
+        {
+            isGetal = int.TryParse((Interaction.InputBox("Geef een nieuwe timer in", "Timer instellen")), out T);
+            while (true)
+            {
+                if (isGetal == true && T >= 5 && T <= 20)
+                {
+                    nieuweTeller = T;
+                    teller = T;
+                    break;
+
+                }
+                else
+                {
+                    MessageBox.Show("Nieuwe timer moet een getal zijn tussen 5 en 20", "Foute ingave", MessageBoxButton.OK, MessageBoxImage.Error);
+                    isGetal = int.TryParse((Interaction.InputBox("Geef een nieuwe timer in", "Timer aanpassen")), out T);
+                }
+            }
+            
+        }
+
+        private void mnuNieuwspel_Click(object sender, RoutedEventArgs e)
+        {
+            var single = MessageBox.Show("Singleplayer of niet ?", "Singleplayer/Multiplayer", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (single == MessageBoxResult.Yes)
+            {
+                mnuTimerinstellen.IsEnabled = false;
+                var tellerInstellen = MessageBox.Show("Huidige timer staat op 10\nWil je een nieuwe timer instellen ? ", "Timer instellen", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (tellerInstellen == MessageBoxResult.Yes)
+                {
+                    isGetal = int.TryParse((Interaction.InputBox("Geef een nieuwe timer in", "Timer aanpassen")), out T);
+                    while (true)
+                    {
+                        if (isGetal == true && T >= 5 && T <= 20)
+                        {
+                            nieuweTeller = T;
+                            speler = Interaction.InputBox("Geef de naam van speler 1", "Naam");
+                            indexWoord = rnd.Next(0, galgjeWoorden.Length);
+                            geheimwoord = galgjeWoorden[indexWoord];
+                            timer.Start();
+                            lblRaad.IsEnabled = true;
+                            lblHint.IsEnabled = true;
+                            lblRaad.Opacity = 1;
+                            lblHint.Opacity = 1;
+                            lblVerbergwoord.Visibility = Visibility.Hidden;
+                            mask = new string('*', geheimwoord.Length);
+                            txtResultaat.Focus();
+                            hint = false;
+                            levens = 10;
+                            teller = T;
+                            picnum = 0;
+                            fouteletters = "";
+                            juisteletters = "";
+                            galg.Source = default;
+                            lblTimer.Visibility = Visibility.Hidden;
+                            lblResultaat.Content = $"{levens} Levens \nJuiste Letters:\nFoute Letters:\n\n{mask}";
+                            break;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Nieuwe timer moet een getal zijn tussen 5 en 20", "Foute ingave", MessageBoxButton.OK, MessageBoxImage.Error);
+                            isGetal = int.TryParse((Interaction.InputBox("Geef een nieuwe timer in", "Timer aanpassen")), out T);
+                        }
+                    }
+
+                }
+                else
+                {
+                    speler = Interaction.InputBox("Geef de naam van speler 1", "Naam");
+                    indexWoord = rnd.Next(0, galgjeWoorden.Length);
+                    geheimwoord = galgjeWoorden[indexWoord];
+                    timer.Start();
+                    lblRaad.IsEnabled = true;
+                    lblRaad.Opacity = 1;
+                    lblHint.IsEnabled = true;
+                    lblHint.Opacity = 1;
+                    lblVerbergwoord.Visibility = Visibility.Hidden;
+                    mask = new string('*', geheimwoord.Length);
+                    txtResultaat.Focus();
+                    hint = false;
+                    levens = 10;
+                    teller = 10;
+                    nieuweTeller = 10;
+                    picnum = 0;
+                    fouteletters = "";
+                    juisteletters = "";
+                    galg.Source = default;
+                    lblTimer.Visibility = Visibility.Hidden;
+                    lblResultaat.Content = $"{levens} Levens \nJuiste Letters:\nFoute Letters:\n\n{mask}";
+                }
+
+
+
+
             }
             else
             {
-                MessageBox.Show("Nieuwe timer moet een getal zijn tussen 5 en 20", "Foute ingave", MessageBoxButton.OK, MessageBoxImage.Error);
-                isGetal = int.TryParse((Interaction.InputBox("Geef een nieuwe timer in", "Timer aanpassen")), out T);
+                txtResultaat.Clear();
+                lblResultaat.Content = "Geef een geheim woord in";
+                lblRaad.IsEnabled = false;
+                lblRaad.Opacity = .7;
+                lblHint.IsEnabled = false;
+                lblHint.Opacity = .7;
+                lblVerbergwoord.Visibility = Visibility.Visible;
+                levens = 10;
+                teller = 10;
+                nieuweTeller = 10;
+                picnum = 0;
+                geheimwoord = "";
+                fouteletters = "";
+                juisteletters = "";
+                hint = false;
+                galg.Source = default;
+                lblTimer.Visibility = Visibility.Visible;
+                mnuTimerinstellen.IsEnabled = true;
+                timer.Stop();
+                lblTijd.Content = "";
+                speler = Interaction.InputBox("Geef de naam van speler 1", "Naam");
             }
 
+
         }
+    
     }
 }

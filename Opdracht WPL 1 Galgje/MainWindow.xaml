@@ -11,8 +11,8 @@
         <Grid.Background>
             <ImageBrush ImageSource="gallows.jpg"></ImageBrush>
         </Grid.Background>
-        <Grid>               
-        
+        <Grid>
+            
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
@@ -43,6 +43,15 @@
         </Viewbox>      
 
         </Grid>
+        <Menu Margin="0,0,312.143,62" Background="Transparent">
+            <MenuItem Header="Menu">
+                <MenuItem Name="mnuAfsluiten" Header="Afsluiten" Click="mnuAfsluiten_Click"></MenuItem>
+                <MenuItem Name="mnuHighscores" Header="Highscores" Click="mnuHighscores_Click"></MenuItem>
+                <MenuItem Name="mnuNieuwspel" Header="Nieuw Spel" Click="mnuNieuwspel_Click"></MenuItem>
+                <MenuItem Name="mnuHint" Header="Hint" Click="mnuHint_Click"></MenuItem>
+                <MenuItem Name="mnuTimerinstellen" Header="Timer Instellen" Click="mnuTimerinstellen_Click" IsEnabled="False"></MenuItem>
+            </MenuItem>
+        </Menu>
         <Grid Name="grid" Visibility="Hidden">
             <Grid.Background>
                 <SolidColorBrush Color="Red"></SolidColorBrush>
